@@ -14,8 +14,6 @@ with open('current.cit.json', 'r', encoding='utf8') as f:
 
 
 
-
-
 with open('list_city.json', 'w',  encoding='utf8') as f:
     json.dump(dict_list, f, indent=4)
 
