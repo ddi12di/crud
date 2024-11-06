@@ -16,7 +16,7 @@ def proccessing(ch, method, properties, body: bytes):
     elif body['name'] == 'delete':
         delete_city(body['meta']['city_id'])
         print(f'DELETE request DONE')
-    elif body['name'] == 'drop':
+    elif body['name'] == 'drop_db':
         drop_db()
         print(f'Congratulations, the database has been deleted')
     else:
