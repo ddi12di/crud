@@ -2,7 +2,10 @@ import os
 from dotenv import load_dotenv
 from model.model import  Weather_model
 import requests
+
+
 load_dotenv()
+
 
 KEY = os.environ.get('KEY')
 ID = os.environ.get('ID')
@@ -10,12 +13,14 @@ UNITS = os.environ.get('UNITS')
 LANG = os.environ.get('LANG')
 BASE_URL = os.environ.get('BASE_URL')
 
+
 def weather(city_id: int) -> Weather_model:
     response = requests.get(
         f'{BASE_URL}?id={city_id}&appid={KEY}&units={UNITS}&lang={LANG}'
     )
     all_response = response.json()
 
+    ##TEST- при недоступности ресурса
     # all_response = {
     #     "coord": {
     #         "lon": 39.4139,

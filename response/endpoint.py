@@ -1,22 +1,13 @@
-import os
-from fastapi import APIRouter, Depends
-from typing import Annotated
+from fastapi import APIRouter
 from pika import *
-import asyncore
-from dataclasses import dataclass, asdict
+from dataclasses import  asdict
 from storage.db import Request, db_save, create_models, drop_tables
 from response.response import weather
 from model.model import TasksRequest, Task
-import requests
 import json
 
 
-
-
-
-
 view_app = APIRouter()
-
 
 
 @view_app.post('/all')
@@ -45,10 +36,12 @@ def response(city_id:int):
     db_save(w)
     return 200
 
+
 @view_app.get('/select/{id}')
 def select_id(id):
     selectID = Request.get(Request.request_id == id)
     return selectID
+
 
 @view_app.get('/update/{id}/{name_c}')
 def update_city(id, name_c):
@@ -65,7 +58,7 @@ def delete_city(id):
         delete_city.delete_instance()
         return 200
     except:
-        return 'No result - 200'
+        return 'No result'
 
 
 @view_app.get('/drop_db')

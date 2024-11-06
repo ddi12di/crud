@@ -1,22 +1,16 @@
 import os
 from dotenv import load_dotenv
 from datetime import datetime
-from peewee import IntegrityError, PostgresqlDatabase
 from peewee import *
 
 from peewee import (
-    AutoField,
-    BooleanField,
     CharField,
-    IntegerField,
     Model,
-    SqliteDatabase,
     DateField,
-    ForeignKeyField
 )
 
-load_dotenv()
 
+load_dotenv()
 
 
 DB_NAME = os.environ.get('DB_NAME')
@@ -25,13 +19,14 @@ DB_PASSWORD = os.environ.get('DB_PASSWORD')
 DB_HOST = os.environ.get('DB_HOST')
 DB_PORT = os.environ.get('DB_PORT')
 
-psql_db = PostgresqlDatabase('postgres', user='postgres', password='admin', host='localhost', port=5432)
 
+psql_db = PostgresqlDatabase('postgres', user='postgres', password='admin', host='localhost', port=5432)
 
 
 class BaseModel(Model):
     class Meta:
         database = psql_db
+
 
 class Request(BaseModel):
     # request_id = IntegerField(primary_key=True)
@@ -40,7 +35,6 @@ class Request(BaseModel):
     city = CharField()
     temp = CharField()
     feels_like = CharField(null=True)
-
 
 def db_save(w) -> None:
     req = Request.create(

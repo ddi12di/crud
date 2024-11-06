@@ -1,13 +1,6 @@
-import time
 import json
-from peewee import *
-import psycopg2
-
 from pika import BlockingConnection, ConnectionParameters
-import requests
-
-from response.endpoint import response
-from response.response import weather
+from response.endpoint import response, delete_city, drop_db
 
 
 def proccessing(ch, method, properties, body: bytes):
@@ -20,6 +13,14 @@ def proccessing(ch, method, properties, body: bytes):
     if body['name'] == 'weather':
         response(body['meta']['city_id'])
         print(f'Proccesed task DONE')
+    elif body['name'] == 'delete':
+        delete_city(body['meta']['city_id'])
+        print(f'DELETE request DONE')
+    elif body['name'] == 'drop':
+        drop_db()
+        print(f'Congratulations, the database has been deleted')
+    else:
+        print(f'error')
 
 
 
