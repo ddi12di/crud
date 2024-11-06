@@ -13,7 +13,7 @@ load_dotenv()
 
 
 
-app = FastAPI(description='Это АПИ для работы с погодой')
+app = FastAPI(description='Это АПИ для получения данных от погоды с погодой')
 app.include_router(view_app)
 
 

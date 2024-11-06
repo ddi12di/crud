@@ -1,28 +1,23 @@
 import json
-list_city = {}
+dict_list = []
 
-with open('current.city.json', encoding='utf8') as f:
+with open('current.cit.json', 'r', encoding='utf8') as f:
     json_city = json.load(f)
 
-
     for i in json_city:
-        a = 1
+        list_city = {}
         if i['id']:
-            a =+ 1
             city = i['name']
-            print(city)
             id = i['id']
-            print(id)
-            list_city = dict.fromkeys(city, id)
-
-            print(list_city)
-
-            if a>100:
-                break
+            list_city.update(dict(city=city, id=id))
+            dict_list.append(list_city)
 
 
 
 
+
+with open('list_city.json', 'w',  encoding='utf8') as f:
+    json.dump(dict_list, f, indent=4)
 
 
 
@@ -30,23 +25,25 @@ with open('current.city.json', encoding='utf8') as f:
 
 
 
+# with open('Base.json', 'r', encoding="utf-8") as fh:
+#     data = json.load(fh)
+#     data["Пользователь 1"]["Имя"] = "Что-то тут"
+#     with open('Base.json', "w", encoding="utf-8") as f:
+#         json.dump(data, f, separators=(',', ': '), sort_keys=True, indent=4, ensure_ascii=True)
+#
+
+    # city = i['name']
+    # print(city)
+    # id = i['id']
+    # print(id)
 
 
 
-
-
-
-
-
-
-
-
-
-
-    with open('Base.json', 'r', encoding="utf-8") as fh:
-        data = json.load(fh)
-        data["Пользователь 1"]["Имя"] = "Что-то тут"
-        with open('Base.json', "w", encoding="utf-8") as f:
-            json.dump(data, f, separators=(',', ': '), sort_keys=True, indent=4, ensure_ascii=True)
+#
+# with open('Base.json', 'r', encoding="utf-8") as fh:
+#     data = json.load(fh)
+#     data["Пользователь 1"]["Имя"] = "Что-то тут"
+#     with open('Base.json', "w", encoding="utf-8") as f:
+#         json.dump(data, f, separators=(',', ': '), sort_keys=True, indent=4, ensure_ascii=True)
 
 

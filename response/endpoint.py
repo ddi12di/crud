@@ -6,13 +6,10 @@ import asyncore
 from dataclasses import dataclass, asdict
 from storage.db import Request, db_save, create_models, drop_tables
 from response.response import weather
-from response.schema import TasksRequest, Task
+from model.model import TasksRequest, Task
 import requests
-
-
 import json
-import psycopg2
-from peewee import IntegrityError, PostgresqlDatabase
+
 
 
 
