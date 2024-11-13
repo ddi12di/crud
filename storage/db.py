@@ -20,7 +20,7 @@ DB_HOST = os.environ.get('DB_HOST')
 DB_PORT = os.environ.get('DB_PORT')
 
 
-psql_db = PostgresqlDatabase('postgres', user='postgres', password='admin', host='localhost', port=5432)
+psql_db = PostgresqlDatabase(f'{DB_NAME}', user=f'{DB_USER}', password=f'{DB_PASSWORD}', host=f'{DB_HOST}', port=f'{DB_PORT}')
 
 
 class BaseModel(Model):
