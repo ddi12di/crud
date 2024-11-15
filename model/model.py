@@ -7,12 +7,14 @@ class Task:
     name: str
     meta: dict
 
+
 class TasksRequest(BaseModel):
     name: str
     meta: dict
 
+
 @dataclass
 class Weather_model:
     temp: int
-    feels_like:int
+    feels_like: int
     city: str

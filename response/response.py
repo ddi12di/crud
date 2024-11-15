@@ -1,11 +1,9 @@
 import os
 from dotenv import load_dotenv
-from model.model import  Weather_model
+from model.model import Weather_model
 import requests
 
-
 load_dotenv()
-
 
 KEY = os.environ.get('KEY')
 ID = os.environ.get('ID')
@@ -73,4 +71,3 @@ def weather(city_id: int) -> Weather_model:
     w = Weather_model(temp, feels_like, city)
 
     return w
-

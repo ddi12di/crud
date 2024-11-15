@@ -1,9 +1,17 @@
 import json
-from pika import BlockingConnection, ConnectionParameters
+import pika, sys, os
 from response.endpoint import response, delete_city, drop_db
+from dotenv import load_dotenv
+
+load_dotenv()
+
+rmq_user = os.getenv('RABBITMQ_USER')
+rmq_pass = os.getenv('RABBITMQ_PASSWORD')
+rmq_host = os.getenv('RABBITMQ_HOST')
 
 
-def proccessing(ch, method, properties, body: bytes):
+def callback(ch, method, properties, body):
+    print(f" [x] Recieved {body}")
     body = body.decode('utf8')
     body = json.loads(body)
     print(body)
@@ -23,23 +31,38 @@ def proccessing(ch, method, properties, body: bytes):
         print(f'error')
 
 
+rmq_user = os.getenv('RABBITMQ_USER')
+rmq_pass = os.getenv('RABBITMQ_PASSWORD')
+rmq_host = os.getenv('RABBITMQ_HOST')
 
-def complete_queue():
-    connection = BlockingConnection(ConnectionParameters(
-        host='127.0.0.1', port=5672
-    ))
+
+def main_work():
+    print('устанавливаем')
+    print(rmq_pass,rmq_user,rmq_host)
+    credentials = pika.PlainCredentials(rmq_user, rmq_pass)
+    connection = pika.BlockingConnection(
+        pika.ConnectionParameters(
+            host=rmq_host,
+            credentials=credentials,
+            connection_attempts=10,
+            retry_delay=5,
+            socket_timeout=10
+        )
+    )
 
     channel = connection.channel()
-    channel.queue_declare('hello')
 
-    channel.basic_consume(queue='hello', on_message_callback=proccessing, auto_ack=True)
+    channel.queue_declare(queue='hello', durable=True)
+
+    channel.basic_consume(queue='hello', on_message_callback=callback, auto_ack=True)
+    print('установили')
+    print(' [*] Waiting for messages. To exit press CTRL+C')
     channel.start_consuming()
 
 
 if __name__ == '__main__':
-
     while True:
         try:
-            count = complete_queue()
+            count = main_work()
         except Exception as e:
             print(e)
